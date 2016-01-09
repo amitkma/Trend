@@ -28,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(ParseUser.getCurrentUser()!=null){
+            startActivity(new Intent(MainActivity.this, DetailsActivity.class));
+            finish();
+        }
         setContentView(R.layout.activity_main);
 
         loginButton = (Button)findViewById(R.id.loginButtonId);
