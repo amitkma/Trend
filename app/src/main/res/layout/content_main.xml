@@ -90,4 +90,16 @@
         android:text="TREND"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Powered by Parse.com"
+        android:id="@+id/textView3"
+        android:textSize="14sp"
+        android:textColor="#7000"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="49dp" />
 </RelativeLayout>
