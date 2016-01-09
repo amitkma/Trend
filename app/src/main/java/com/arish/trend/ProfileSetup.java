@@ -15,7 +15,7 @@ public class ProfileSetup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_setup);
 
-        Toolbar mToolBar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar mToolBar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(mToolBar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);

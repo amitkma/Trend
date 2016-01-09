@@ -7,14 +7,14 @@
     android:fitsSystemWindows="true"
     tools:context="com.arish.trend.ProfileSetup">
     <include layout="@layout/toolbar"
-        android:id="@+id/toolbar"/>
+        android:id="@+id/tool_bar"/>
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_height="120dp"
         android:layout_width="120dp"
-        android:layout_marginTop="50dp"
         android:scaleType="centerCrop"
+        android:layout_marginTop="50dp"
         android:src="@drawable/person_icon"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/tool_bar"
         android:layout_centerHorizontal="true" />
 
     <EditText

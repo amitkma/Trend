@@ -65,12 +65,9 @@
             android:layout_weight="1"
             android:text="Signup"
             android:id="@+id/signupButtonId"/>
-            android:text="Signup" />
-
-
-            />
+            android:text="Signup"/>
         <Button
-            android:id="@+id/signupButtonId"
+            android:id="@+id/loginButtonId"
             style="@style/login_button"
             android:layout_width="0dp"
 

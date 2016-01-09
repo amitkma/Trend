@@ -11,8 +11,10 @@
 
         <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
     </style>
-    <style name="ToolBarTheme" parent="AppTheme.Base">
-        <item name="android:textColorPrimary">#fff</item>
+
+    <style name="MyToolBar" parent="Theme.AppCompat.Light">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name = "android:textColorSecondary">#FFF</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
