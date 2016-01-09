@@ -2,6 +2,7 @@ package com.arish.trend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,10 +51,14 @@ public class MainActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(usernameField.getText().toString().trim()!= null|| userPasswordField.getText().toString().trim()!=null )
                 signupParse();
-            }
-        });
+                else
+                  Snackbar.make(findViewById(R.id.coordinatorlay),"Cannot be Empty",Snackbar.LENGTH_SHORT).show();
+        }
+    });
     }
+
 
     private void loginParse() {
         ParseUser.logInInBackground(usernameField.getText().toString().trim(), userPasswordField.getText().toString().trim(), new LogInCallback() {
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signupParse(){
+
         ParseUser parseUser = new ParseUser();
         parseUser.setUsername(usernameField.getText().toString().trim());
         parseUser.setPassword(userPasswordField.getText().toString().trim());
