@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearlayout_edittext"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="81dp"
+        android:layout_marginBottom="80dp"
         android:fontFamily="sans-serif-condensed"
 
         android:text="TREND"
