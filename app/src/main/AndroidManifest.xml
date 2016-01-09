@@ -25,6 +25,10 @@
         <activity
             android:name=".DetailsActivity"
             android:label="@string/title_activity_details"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ProfileSetup"
+            android:label="@string/title_activity_profile_setup"
             android:theme="@style/AppTheme"></activity>
     </application>
 

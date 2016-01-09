@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ParseUser.logOut();
         if(ParseUser.getCurrentUser()!=null){
             startActivity(new Intent(MainActivity.this, DetailsActivity.class));
             finish();
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ProfileSetup.class);
                     startActivity(intent);
                 }
             }
