@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 if(usernameField.getText().toString().trim()!= null|| userPasswordField.getText().toString().trim()!=null )
                 signupParse();
                 else
-                  Snackbar.make(findViewById(R.id.coordinatorlay),"Cannot be Empty",Snackbar.LENGTH_SHORT).show();
+                  Snackbar.make(findViewById(R.id.coordinatorlay),"Cannot be Empt",Snackbar.LENGTH_SHORT).show();
         }
     });
     }
