@@ -1,7 +1,6 @@
 package com.arish.trend;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -32,7 +31,7 @@ public class ProfileSetup extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_details, menu);
+        getMenuInflater().inflate(R.menu.menu_profile_setup, menu);
         return true;
     }
 
