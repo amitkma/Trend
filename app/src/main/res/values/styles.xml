@@ -9,7 +9,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="toolbarStyle">@style/Widget.AppCompat.Toolbar</item>
+
     </style>
 
     <style name="MyToolBar" parent="Theme.AppCompat.Light">
