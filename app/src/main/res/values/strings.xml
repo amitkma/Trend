@@ -5,4 +5,8 @@
     <string name="title_activity_profile_setup">ProfileSetup</string>
     <string name="action_done">DONE</string>
     <string name="empty">Cannot be empty</string>
+    <string name="network_state_false">poor connectivity or no network</string>
+    <string name="error_unclassified">Something went wrong</string>
+    <string name="min_characters">Min 6 characters required</string>
+    <string name="error_acc_already_linked">Account already linked, try different username</string>
 </resources>

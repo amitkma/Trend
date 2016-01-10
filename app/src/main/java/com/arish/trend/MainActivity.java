@@ -3,8 +3,6 @@ package com.arish.trend;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +11,16 @@ import android.widget.EditText;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private Button loginButton;
     private Button signupButton;
     private EditText usernameField;
     private EditText userPasswordField;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +37,16 @@ public class MainActivity extends AppCompatActivity {
         usernameField = (EditText) findViewById(R.id.username);
         userPasswordField = (EditText) findViewById(R.id.userPassword);
 
-        testParse();
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(usernameField.getText().toString().trim().length() !=0 || userPasswordField.getText().toString().trim().length() !=0)
-                        loginParse();
+                if (check_connection() == false)
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.network_state_false, Snackbar.LENGTH_SHORT).show();
+                else if (usernameField.getText().toString().trim().length() != 0 || userPasswordField.getText().toString().trim().length() != 0)
+                    loginParse();
                 else {
-                    Log.d("Tag","Reached here");
+
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -57,10 +55,17 @@ public class MainActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(usernameField.getText().toString().trim().length() !=0 || userPasswordField.getText().toString().trim().length() !=0)
+                if (check_connection() == false)
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.network_state_false, Snackbar.LENGTH_SHORT).show();
+                else if (usernameField.getText().toString().trim().length() != 0 && userPasswordField.getText().toString().trim().length() > 5)
+
                     signupParse();
-                else
+                else if (userPasswordField.getText().toString().trim().length() == 0)
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
+                else {
+                    userPasswordField.setBackgroundResource(R.drawable.button_login_shape_mincharerror);
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.min_characters, Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -73,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                     startActivity(intent);
+                } else {
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
             }
         });
@@ -90,16 +98,16 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, ProfileSetup.class);
                     startActivity(intent);
+                } else if (e.getCode() == ParseException.ACCOUNT_ALREADY_LINKED)
+                    Snackbar.make(findViewById(R.id.coordinatorlay), e.toString(), Snackbar.LENGTH_SHORT).show();
+                else {
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
             }
         });
     }
 
-    private void testParse() {
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,4 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
