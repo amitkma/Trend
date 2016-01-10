@@ -79,8 +79,18 @@ public class MainActivity extends BaseActivity {
                     Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                     startActivity(intent);
                 } else {
-                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
-                    e.printStackTrace();
+                    switch (e.getCode()) {
+                        case ParseException.OBJECT_NOT_FOUND:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case ParseException.CONNECTION_FAILED:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                            break;
+                    }
                 }
             }
         });
@@ -104,10 +114,11 @@ public class MainActivity extends BaseActivity {
                             Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_LONG).show();
                             break;
                         case ParseException.CONNECTION_FAILED:
-                            Snackbar.make(findViewById(R.id.coordinatorlay),e.getMessage(),Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_SHORT).show();
                             break;
                         default:
                             Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                            e.printStackTrace();
                             break;
                     }
 
