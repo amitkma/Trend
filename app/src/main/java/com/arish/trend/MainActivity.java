@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity {
                 else if (userPasswordField.getText().toString().trim().length() == 0)
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
                 else {
-                    userPasswordField.setBackgroundResource(R.drawable.button_login_shape_mincharerror);
+                    userPasswordField.setBackgroundResource(R.drawable.edittext_login_shape_min_char_error);
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.min_characters, Snackbar.LENGTH_SHORT).show();
                 }
             }
@@ -98,12 +98,22 @@ public class MainActivity extends BaseActivity {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, ProfileSetup.class);
                     startActivity(intent);
-                } else if (e.getCode() == ParseException.ACCOUNT_ALREADY_LINKED)
-                    Snackbar.make(findViewById(R.id.coordinatorlay), e.toString(), Snackbar.LENGTH_SHORT).show();
-                else {
-                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
-                    e.printStackTrace();
+                } else {
+                    switch (e.getCode()) {
+                        case ParseException.USERNAME_TAKEN:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case ParseException.CONNECTION_FAILED:
+                            Snackbar.make(findViewById(R.id.coordinatorlay),e.getMessage(),Snackbar.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                            break;
+                    }
+
                 }
+
+
             }
         });
     }
