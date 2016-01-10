@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity {
                 if (check_connection() == false)
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.network_state_false, Snackbar.LENGTH_SHORT).show();
                 else if (usernameField.getText().toString().trim().length() != 0 && userPasswordField.getText().toString().trim().length() > R.integer.min_char_for_password)
-
                     signupParse();
                 else if (userPasswordField.getText().toString().trim().length() == 0)
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();

@@ -9,4 +9,5 @@
     <string name="error_unclassified">Something went wrong</string>
     <string name="min_characters">Min 6 characters required</string>
     <string name="error_acc_already_linked">Account already linked, try different username</string>
+    <string name="title_activity_current_trends">CurrentTrendsActivity</string>
 </resources>
