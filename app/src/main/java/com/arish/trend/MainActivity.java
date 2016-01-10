@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,41 +23,46 @@ public class MainActivity extends AppCompatActivity {
     private Button signupButton;
     private EditText usernameField;
     private EditText userPasswordField;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ParseUser.logOut();
-        if(ParseUser.getCurrentUser()!=null){
+        if (ParseUser.getCurrentUser() != null) {
             startActivity(new Intent(MainActivity.this, DetailsActivity.class));
             finish();
         }
         setContentView(R.layout.activity_main);
 
-        loginButton = (Button)findViewById(R.id.loginButtonId);
-        signupButton = (Button)findViewById(R.id.signupButtonId);
-        usernameField = (EditText)findViewById(R.id.username);
-        userPasswordField = (EditText)findViewById(R.id.userPassword);
+        loginButton = (Button) findViewById(R.id.loginButtonId);
+        signupButton = (Button) findViewById(R.id.signupButtonId);
+        usernameField = (EditText) findViewById(R.id.username);
+        userPasswordField = (EditText) findViewById(R.id.userPassword);
 
         testParse();
-
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginParse();
+                if(usernameField.getText().toString().trim().length() !=0 || userPasswordField.getText().toString().trim().length() !=0)
+                        loginParse();
+                else {
+                    Log.d("Tag","Reached here");
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(usernameField.getText().toString().trim()!= null|| userPasswordField.getText().toString().trim()!=null )
-                signupParse();
+                if(usernameField.getText().toString().trim().length() !=0 || userPasswordField.getText().toString().trim().length() !=0)
+                    signupParse();
                 else
-                  Snackbar.make(findViewById(R.id.coordinatorlay),"Cannot be Empt",Snackbar.LENGTH_SHORT).show();
-        }
-    });
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -64,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.logInInBackground(usernameField.getText().toString().trim(), userPasswordField.getText().toString().trim(), new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if(e==null){
+                if (e == null) {
                     Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                     startActivity(intent);
                 }
@@ -72,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void signupParse(){
+    private void signupParse() {
 
         ParseUser parseUser = new ParseUser();
         parseUser.setUsername(usernameField.getText().toString().trim());
@@ -88,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void testParse() {
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
