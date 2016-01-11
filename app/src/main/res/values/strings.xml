@@ -10,4 +10,5 @@
     <string name="min_characters">Min 6 characters required</string>
     <string name="error_acc_already_linked">Account already linked, try different username</string>
     <string name="title_activity_current_trends">CurrentTrendsActivity</string>
+    <string name="title_activity_create_trend">Create_trend</string>
 </resources>
