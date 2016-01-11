@@ -40,7 +40,7 @@
             android:label="@string/title_activity_current_trends"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".Create_trend"
+            android:name=".CreateTrend"
             android:label="@string/title_activity_create_trend"
             android:theme="@style/AppTheme"></activity>
     </application>
