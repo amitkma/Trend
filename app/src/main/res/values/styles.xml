@@ -55,8 +55,9 @@
         <item name="android:textColor">#000</item>
         <item name="android:background">@drawable/edittext_login_state</item>
     </style>
+
     <style name="textview_explore">
-    <item name="android:textColor">#fff</item>
+        <item name="android:textColor">#fff</item>
     </style>
 
     <style name="card_imageview_buttons">
@@ -66,6 +67,27 @@
         <item name="android:alpha">.54</item>
         <item name="android:paddingRight">12dp</item>
         <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="icon_edittext">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:alpha">.54</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="linearlayout_create_trend_edittext">
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_height">70dp</item>
+    </style>
+
+    <style name="edittext_create_trend">
+        <item name="android:textColorHint">#3000</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
     </style>
 
 </resources>
