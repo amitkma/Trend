@@ -2,7 +2,7 @@ package com.arish.trend;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,63 +11,99 @@ import android.widget.EditText;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private Button loginButton;
     private Button signupButton;
     private EditText usernameField;
     private EditText userPasswordField;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ParseUser.logOut();
-        if(ParseUser.getCurrentUser()!=null){
+        if (ParseUser.getCurrentUser() != null) {
             startActivity(new Intent(MainActivity.this, DetailsActivity.class));
             finish();
         }
         setContentView(R.layout.activity_main);
 
-        loginButton = (Button)findViewById(R.id.loginButtonId);
-        signupButton = (Button)findViewById(R.id.signupButtonId);
-        usernameField = (EditText)findViewById(R.id.username);
-        userPasswordField = (EditText)findViewById(R.id.userPassword);
+        loginButton = (Button) findViewById(R.id.loginButtonId);
+        signupButton = (Button) findViewById(R.id.signupButtonId);
+        usernameField = (EditText) findViewById(R.id.username);
+        userPasswordField = (EditText) findViewById(R.id.userPassword);
 
-        testParse();
 
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginParse();
+                if (check_connection() == false)
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.network_state_false, Snackbar.LENGTH_SHORT).show();
+                else if (usernameField.getText().toString().trim().length() != 0 || userPasswordField.getText().toString().trim().length() != 0)
+                    loginParse();
+                else {
+
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signupParse();
+                if (check_connection() == false)
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.network_state_false, Snackbar.LENGTH_SHORT).show();
+                else if (usernameField.getText().toString().trim().length() != 0 && userPasswordField.getText().toString().trim().length() > 6)
+                    signupParse();
+                else if (userPasswordField.getText().toString().trim().length() == 0)
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
+                else {
+                    userPasswordField.setBackgroundResource(R.drawable.edittext_login_shape_min_char_error);
+                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.min_characters, Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
+
+
     }
+
+
+
+
 
     private void loginParse() {
         ParseUser.logInInBackground(usernameField.getText().toString().trim(), userPasswordField.getText().toString().trim(), new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if(e==null){
+                if (e == null) {
                     Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
                     startActivity(intent);
+                } else {
+                    switch (e.getCode()) {
+                        case ParseException.OBJECT_NOT_FOUND:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case ParseException.CONNECTION_FAILED:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                            break;
+                    }
                 }
             }
         });
     }
 
-    private void signupParse(){
+    private void signupParse() {
+
         ParseUser parseUser = new ParseUser();
         parseUser.setUsername(usernameField.getText().toString().trim());
         parseUser.setPassword(userPasswordField.getText().toString().trim());
@@ -78,15 +114,27 @@ public class MainActivity extends AppCompatActivity {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, ProfileSetup.class);
                     startActivity(intent);
+                } else {
+                    switch (e.getCode()) {
+                        case ParseException.USERNAME_TAKEN:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            break;
+                        case ParseException.CONNECTION_FAILED:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Snackbar.make(findViewById(R.id.coordinatorlay), R.string.error_unclassified, Snackbar.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                            break;
+                    }
+
                 }
+
+
             }
         });
     }
-    private void testParse() {
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -109,4 +157,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
