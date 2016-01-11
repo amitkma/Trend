@@ -6,10 +6,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class ProfileSetup extends AppCompatActivity {
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+public class ProfileSetup extends AppCompatActivity{
+
+    private EditText nameField;
+    private EditText emailField;
+    private final String LOG_TAG="TrendLocationApp";
+    private GoogleApiClient mGoogleApiClient;
+    private LocationRequest mLocationRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +41,11 @@ public class ProfileSetup extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Done! Yeah we will add some action to it soon", Toast.LENGTH_SHORT).show();
             }
         });
+
+        nameField = (EditText)findViewById(R.id.fullName);
+        emailField = (EditText)findViewById(R.id.emailAddress);
+
+
     }
 
     @Override
@@ -44,7 +64,16 @@ public class ProfileSetup extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_done) {
-            Toast.makeText(getApplicationContext(), "Done! Yeah we will add some action to it soon", Toast.LENGTH_SHORT).show();
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.put("Name", nameField.getText().toString().trim());
+            currentUser.setEmail(emailField.getText().toString().toLowerCase().trim());
+            currentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    Toast.makeText(getApplicationContext(), "Done! we have added your details.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
             return true;
         }
 

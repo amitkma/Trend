@@ -4,5 +4,6 @@
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
     android:id="@+id/tool_bar"
-    style="@style/MyToolBar"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    app:theme="@style/MyToolBar"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" />
