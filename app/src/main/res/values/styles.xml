@@ -84,7 +84,7 @@
     <style name="edittext_create_trend">
         <item name="android:textColorHint">#3000</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginRight">16dp</item>
