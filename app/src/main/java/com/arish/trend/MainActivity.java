@@ -58,14 +58,11 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 if (check_connection() == false)
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.network_state_false, Snackbar.LENGTH_SHORT).show();
-                else if (usernameField.getText().toString().trim().length() != 0 && userPasswordField.getText().toString().trim().length() > 6)
+                else if (usernameField.getText().toString().trim().length() != 0 && userPasswordField.getText().toString().trim().length() !=0)
                     signupParse();
                 else if (userPasswordField.getText().toString().trim().length() == 0)
                     Snackbar.make(findViewById(R.id.coordinatorlay), R.string.empty, Snackbar.LENGTH_SHORT).show();
-                else {
-                    userPasswordField.setBackgroundResource(R.drawable.edittext_login_shape_min_char_error);
-                    Snackbar.make(findViewById(R.id.coordinatorlay), R.string.min_characters, Snackbar.LENGTH_SHORT).show();
-                }
+
             }
         });
 
