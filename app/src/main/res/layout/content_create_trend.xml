@@ -13,21 +13,22 @@
     tools:showIn="@layout/activity_create_trend">
 
     <ImageView
-        android:id="@+id/trend_image"
+        android:id="@+id/img"
         android:layout_width="175dp "
         android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+
         android:alpha=".08"
-        android:scaleType="centerCrop"
         android:background="#38000000"
+
         android:src="@drawable/ic_image_black_24dp" />
 
     <LinearLayout
        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/trend_image"
+        android:layout_below="@+id/img"
 
         android:orientation="vertical">
 
@@ -37,13 +38,12 @@
 
             <ImageView
                 style="@style/icon_edittext"
-                android:layout_width="51dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_code_black_24dp" />
 
             <EditText
                 android:hint="(Title)"
-                android:id="@+id/trend_title"
                 style="@style/edittext_create_trend"
                 android:layout_width="match_parent"
                 />
@@ -61,7 +61,6 @@
 
             <EditText
                 android:hint="(Description)"
-                android:id="@+id/trend_description"
                 style="@style/edittext_create_trend"
                 android:layout_width="match_parent"
                />
@@ -78,7 +77,6 @@
                 android:src="@drawable/ic_extension_black_24dp" />
             <EditText
                 android:hint="(TAG's)"
-                android:id="@+id/trend_tags"
                 style="@style/edittext_create_trend"
                 android:layout_width="match_parent"
                  />
