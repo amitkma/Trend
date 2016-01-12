@@ -78,7 +78,7 @@
 
     <style name="linearlayout_create_trend_edittext">
         <item name="android:paddingBottom">8dp</item>
-        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_height">60dp</item>
     </style>
 
     <style name="edittext_create_trend">
