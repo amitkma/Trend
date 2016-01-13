@@ -42,6 +42,7 @@ int Temp;
         imageView_editprof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if ( Temp==0) {
                     navigationView.getMenu().clear();
                     //navigationView.getMenu().findItem(R.menu.nav_menu).setVisible(false);
