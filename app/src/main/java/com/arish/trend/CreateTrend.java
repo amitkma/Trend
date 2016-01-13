@@ -1,6 +1,8 @@
 package com.arish.trend;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,9 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,6 +35,8 @@ import java.util.Date;
 public class CreateTrend extends AppCompatActivity {
 
     private ImageView mImageView;
+    private EditText mTrendTitle;
+    private EditText mTrendDescription;
 
     //Constants for IMAGE CAPTURE
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -37,6 +50,8 @@ public class CreateTrend extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mTrendTitle = (EditText)findViewById(R.id.trend_title);
+        mTrendDescription = (EditText)findViewById(R.id.trend_description);
         mImageView=(ImageView)findViewById(R.id.trend_image);
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,10 +63,40 @@ public class CreateTrend extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                postAndPushTrend();
             }
         });
+    }
+
+    private void postAndPushTrend() {
+        String thumbName= new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        Bitmap img=((BitmapDrawable)mImageView.getDrawable()).getBitmap();
+
+        final ParseObject trendData = new ParseObject("TrendData");
+        final ParseFile parseFile = new ParseFile(thumbName + "_thumb.jpg", getBytesFromBitmap(img));
+
+        parseFile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                trendData.put("trendImage", parseFile);
+                trendData.put("trendTitle", mTrendTitle.getText().toString().trim());
+                trendData.put("trendDescription", mTrendDescription.getText().toString().trim());
+                //Finally save all the user details
+                trendData.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Toast.makeText(CreateTrend.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(CreateTrend.this, CurrentTrendsActivity.class);
+                        startActivity(i);
+                        ParsePush newTrendPush = new ParsePush();
+                        newTrendPush.setMessage(ParseUser.getCurrentUser().getUsername()+" created a new trend. Have fun!");
+                        newTrendPush.sendInBackground();
+                        finish();
+                    }
+                });
+            }
+        });
+
     }
 
     private void showPopup() {
@@ -155,6 +200,14 @@ public class CreateTrend extends AppCompatActivity {
             }
         }
 
+    }
+
+    public byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Bitmap newImage=Bitmap.createScaledBitmap(bitmap,720,(bitmap.getHeight()*720/bitmap.getWidth()),true);
+
+        newImage.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        return stream.toByteArray();
     }
 
 }
