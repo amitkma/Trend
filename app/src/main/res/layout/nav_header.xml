@@ -34,10 +34,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
      android:paddingRight="18dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="12dp"
         android:paddingTop="20dp"
         android:paddingLeft="20dp"
-        android:src="@drawable/ic_border_color_white_18dp" />
+        android:src="@drawable/ic_arrow_drop_down_white_24dp"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
 
