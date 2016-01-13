@@ -1,55 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    >
+    android:layout_height="150dp">
 
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:src="@drawable/cover_nav"
-
-    android:scaleType="centerCrop"
-
-   />
-
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+
+        android:src="@drawable/cover_nav"
+
+        />
+
+
+    <TextView
+        android:id="@+id/nav_header_text_welcome"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="14dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="User"
 
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:id="@+id/linearLayout">
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
-
-
-        <TextView
-            android:id="@+id/nav_header_text_welcome"
-            android:paddingTop="2dp"
-            android:layout_width="match_parent"
-            android:paddingBottom="14dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:fontFamily="sans-serif-medium"
-            android:text="User"
-
-            android:textColor="#fff"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/nav_header_imageView_editprofile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+     android:paddingRight="18dp"
+        android:paddingBottom="16dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:src="@drawable/ic_border_color_white_18dp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
 
         android:id="@+id/profile_image"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_marginBottom="4dp"
 
-        android:layout_marginRight="16dp"
-      android:layout_above="@+id/linearLayout"
-        android:layout_alignParentRight="true"
-         />
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
 </RelativeLayout>

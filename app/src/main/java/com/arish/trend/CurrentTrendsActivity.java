@@ -14,8 +14,8 @@ public class CurrentTrendsActivity extends BaseActivity {
 
         setup_toolbar();
         setup_nav_drawer();
-        setup_nav_item_listener();
-        View view=navigationView.inflateHeaderView(R.layout.nav_header);
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
