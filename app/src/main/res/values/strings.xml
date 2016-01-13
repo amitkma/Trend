@@ -12,4 +12,6 @@
     <string name="error_acc_already_linked">Account already linked, try different username</string>
     <string name="title_activity_current_trends">CurrentTrendsActivity</string>
     <string name="title_activity_create_trend">Create_trend</string>
+    <string name="openDrawer">open</string>
+    <string name="closeDrawer">close</string>
 </resources>
