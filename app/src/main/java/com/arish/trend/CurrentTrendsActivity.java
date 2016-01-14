@@ -30,6 +30,7 @@ public class CurrentTrendsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_trends);
 
+        Intent intent = getIntent();
         mRecyclerView=(RecyclerView)findViewById(R.id.recyclerview);
         mLayoutManager=new LinearLayoutManager(this);
         mRecyclerView.setHasFixedSize(true);
@@ -44,6 +45,31 @@ public class CurrentTrendsActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CurrentTrendsActivity.this, CreateTrend.class));
+            }
+        });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        if(intent.getStringExtra("message")!=null){
+            refreshData();
+        }
+    }
+
+    private void refreshData() {
+        ParseQuery<ParseObject> parseQuery = new ParseQuery<ParseObject>("TrendData");
+        parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                {
+                    ParseObject parseObject = objects.get(objects.size()-1);
+                    TrendData td = new TrendData();
+                    td.title=parseObject.getString("trendTitle");
+                    ParseFile parseFile = parseObject.getParseFile("trendImage");
+                    td.url = parseFile.getUrl();
+                    currentTrendsAdapter.addData(td);
+                }
             }
         });
     }

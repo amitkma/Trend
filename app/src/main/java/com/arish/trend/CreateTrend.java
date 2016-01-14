@@ -26,6 +26,9 @@ import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -89,7 +92,19 @@ public class CreateTrend extends AppCompatActivity {
                         Intent i = new Intent(CreateTrend.this, CurrentTrendsActivity.class);
                         startActivity(i);
                         ParsePush newTrendPush = new ParsePush();
-                        newTrendPush.setMessage(ParseUser.getCurrentUser().getUsername()+" created a new trend. Have fun!");
+                        JSONObject object = new JSONObject();
+                        try {
+                            object.put("is_background", false);
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("message","Hello! Welcome to parse notifications.") ;
+                            jsonObject.put("title", "Trend");
+                            object.put("data", jsonObject);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                        }
+
+
+                        newTrendPush.setData(object);
                         newTrendPush.sendInBackground();
                         finish();
                     }
