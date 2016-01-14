@@ -1,5 +1,6 @@
 package com.arish.trend;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.parse.ParseUser;
+
 /**
  * Created by Ayush on 10-Jan-16.
  */
@@ -20,8 +23,9 @@ public class BaseActivity extends AppCompatActivity {
     ListView listview;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
+    ParseUser currentUser;
+    int Temp;
     private Toolbar toolbar;
-
 
     public void setup_toolbar() {
 
@@ -31,26 +35,25 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-int Temp;
     //Navigatio Drawer
     public void setup_nav_drawer() {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         View view = navigationView.inflateHeaderView(R.layout.nav_header);
         navigationView.inflateMenu(R.menu.nav_menu);
-         Temp=0;
+        Temp = 0;
         ImageView imageView_editprof = (ImageView) view.findViewById(R.id.nav_header_imageView_editprofile);
         imageView_editprof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if ( Temp==0) {
+                if (Temp == 0) {
                     navigationView.getMenu().clear();
                     //navigationView.getMenu().findItem(R.menu.nav_menu).setVisible(false);
                     navigationView.inflateMenu(R.menu.nav_menu_profile_settings);
-                    Temp=1;
+                    Temp = 1;
 
                 } else {
-                    Temp=0;
+                    Temp = 0;
                     navigationView.getMenu().clear();
                     navigationView.inflateMenu(R.menu.nav_menu);
                 }
@@ -105,10 +108,18 @@ int Temp;
                         return true;
 
                     case R.id.logout:
-                        drawerLayout.closeDrawers();
 
-
+                        if (check_connection()) {
+                            drawerLayout.closeDrawers();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    logout();
+                                }
+                            }, 150);
+                        }
                         return true;
+
                     case R.id.Feedback:
                         drawerLayout.closeDrawers();
                         new Handler().postDelayed(new Runnable() {
@@ -117,7 +128,6 @@ int Temp;
 
                             }
                         }, 500);
-
                         return true;
 
 
@@ -129,7 +139,6 @@ int Temp;
             }
         });
     }
-
 
     public boolean check_connection() {
         ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -150,6 +159,21 @@ int Temp;
 
             return true;
         }
+
+
+    }
+
+    private void logout() {
+        currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            ParseUser.logOutInBackground();
+        }
+
+
+        startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+
 
 
     }

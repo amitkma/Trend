@@ -26,8 +26,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (ParseUser.getCurrentUser() != null) {
-            startActivity(new Intent(MainActivity.this, CurrentTrendsActivity.class));
-            finish();
+            startActivity(new Intent(this, CurrentTrendsActivity.class));
         }
         setContentView(R.layout.activity_main);
 
@@ -79,6 +78,7 @@ public class MainActivity extends BaseActivity {
             public void done(ParseUser user, ParseException e) {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, CurrentTrendsActivity.class);
+                    finish();
                     startActivity(intent);
                 } else {
                     switch (e.getCode()) {
@@ -109,7 +109,9 @@ public class MainActivity extends BaseActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Intent intent = new Intent(MainActivity.this, ProfileSetup.class);
+
                     startActivity(intent);
+                    finish();
                 } else {
                     switch (e.getCode()) {
                         case ParseException.USERNAME_TAKEN:

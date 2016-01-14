@@ -1,7 +1,7 @@
 package com.arish.trend;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,27 +10,25 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class ProfileSetup extends AppCompatActivity{
+public class ProfileSetup extends BaseActivity {
 
+    private final String LOG_TAG = "TrendLocationApp";
     private EditText nameField;
     private EditText emailField;
-    private final String LOG_TAG="TrendLocationApp";
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_setup);
 
-        Toolbar mToolBar = (Toolbar)findViewById(R.id.tool_bar);
+        Toolbar mToolBar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mToolBar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -38,12 +36,12 @@ public class ProfileSetup extends AppCompatActivity{
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Done! Yeah we will add some action to it soon", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
         });
 
-        nameField = (EditText)findViewById(R.id.fullName);
-        emailField = (EditText)findViewById(R.id.emailAddress);
+        nameField = (EditText) findViewById(R.id.fullName);
+        emailField = (EditText) findViewById(R.id.emailAddress);
 
 
     }
@@ -70,7 +68,11 @@ public class ProfileSetup extends AppCompatActivity{
             currentUser.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    Toast.makeText(getApplicationContext(), "Done! we have added your details.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Done! we have updated your details.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ProfileSetup.this, CurrentTrendsActivity.class);
+                    finish();
+                    startActivity(intent);
+
                 }
             });
 
@@ -78,5 +80,12 @@ public class ProfileSetup extends AppCompatActivity{
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
