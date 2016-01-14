@@ -13,10 +13,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha=".7"
+
         android:scaleType="centerCrop"
         android:src="@drawable/flora"
-        android:tint="#DB4527A0"
+        android:tint="#AD42A5F5"
         android:tintMode="multiply" />
 
     <LinearLayout
