@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/basic_actions"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
+    android:layout_height="48dp"
     android:gravity="end"
     android:orientation="horizontal"
     android:padding="8dp">
 
     <ImageView
-        android:layout_width="48dp"
+        android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_marginRight="8dp"
         android:alpha="0.54"
@@ -17,7 +17,7 @@
         android:src="@drawable/ic_favorite_black_24dp" />
 
     <ImageView
-        android:layout_width="48dp"
+        android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_marginRight="8dp"
         android:alpha="0.54"
@@ -26,7 +26,7 @@
         android:src="@drawable/ic_comment_black_24dp" />
 
     <ImageView
-        android:layout_width="48dp"
+        android:layout_width="36dp"
         android:layout_height="match_parent"
         android:layout_marginRight="8dp"
         android:alpha="0.54"
