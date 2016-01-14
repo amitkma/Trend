@@ -62,4 +62,8 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
         data.add(newTrendData);
         notifyItemInserted(data.size()-1);
     }
+    public void addRefreshData(TrendData newTrendData){
+        data.add(0, newTrendData);
+        notifyItemInserted(data.size()-1);
+    }
 }

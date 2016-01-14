@@ -68,7 +68,7 @@ public class CurrentTrendsActivity extends BaseActivity {
                     td.title=parseObject.getString("trendTitle");
                     ParseFile parseFile = parseObject.getParseFile("trendImage");
                     td.url = parseFile.getUrl();
-                    currentTrendsAdapter.addData(td);
+                    currentTrendsAdapter.addRefreshData(td);
                 }
             }
         });
