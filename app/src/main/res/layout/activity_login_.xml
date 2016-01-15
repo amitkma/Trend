@@ -36,7 +36,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:scrollHorizontally="true"
         android:singleLine="true"
-        android:text="Fashion is my style   ||   Fashion is my life   ||   Its all about the trends   ||   The trend's of me"
+        android:text="Fashion is my and your style   ||   Fashion is my life   ||   Its all about the trends   ||   The trend's of me"
         android:textColor="#fff"
         android:textSize="10dp" />
 
