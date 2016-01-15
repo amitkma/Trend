@@ -219,9 +219,9 @@ public class CreateTrend extends AppCompatActivity {
 
     public byte[] getBytesFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        Bitmap newImage=Bitmap.createScaledBitmap(bitmap,720,(bitmap.getHeight()*720/bitmap.getWidth()),true);
+        Bitmap newImage=Bitmap.createScaledBitmap(bitmap,480,(bitmap.getHeight()*480/bitmap.getWidth()),true);
 
-        newImage.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        newImage.compress(Bitmap.CompressFormat.JPEG, 50, stream);
         return stream.toByteArray();
     }
 

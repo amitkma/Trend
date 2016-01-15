@@ -30,7 +30,7 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R.layout.activity_current_trends_cards_item, parent, false);
+        View v = inflater.inflate(R.layout.trend_card_with_image, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -53,7 +53,7 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
         private ImageView mImageView;
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextView=(TextView)itemView.findViewById(R.id.current_trend_title);
+            mTextView=(TextView)itemView.findViewById(R.id.trend_description_id);
             mImageView=(ImageView)itemView.findViewById(R.id.current_trend_image);
         }
     }
