@@ -1,33 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
+<android.support.v7.widget.CardView
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="240dp"
-    android:layout_gravity="center"
-    android:layout_marginBottom="4dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="4dp"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="2dp">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    card:cardElevation="4dp"
+    card:cardCornerRadius="2dp"
+    card:cardUseCompatPadding="true"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="3dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shop_title_id"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp"
+            android:text="Recreation"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
-        <include
-            android:id="@+id/cardImageWithText"
-            layout="@layout/card_image_with_text"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fun at the beach"
+            android:singleLine="true"
+            android:textSize="24sp"
+            android:textColor="@color/primary_text"
+            android:fontFamily="sans-serif-regular"
+            android:id="@+id/product_title_id"
+            android:layout_below="@+id/shop_title_id"
+            android:layout_alignLeft="@+id/shop_title_id"
+            android:layout_alignRight="@+id/product_image_id"
+            android:layout_alignEnd="@+id/product_image_id"
+            android:layout_alignStart="@+id/shop_title_id"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="90dp"/>
 
-        <include
-            android:id="@+id/basic_actions"
-            layout="@layout/basic_action_for_trend" />
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/product_image_id"
+            android:src="@drawable/cover_education"
+            android:scaleType="centerCrop"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            />
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="There were some signs of calm at noon, and these become more distinct as the sun"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/secondary_text"
+            android:id="@+id/product_details_id"
+            android:layout_below="@+id/product_image_id"
+            android:layout_alignLeft="@+id/product_title_id"
+            android:layout_alignStart="@+id/product_title_id" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
 
+            android:orientation="vertical"
+            android:layout_below="@+id/product_details_id"
+            android:layout_alignParentRight="true">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADD TO CART"
+                android:gravity="right"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+                android:background="@android:color/transparent"
+                android:textColor="@color/primary_dark"
+                android:id="@+id/textView3"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 </android.support.v7.widget.CardView>
