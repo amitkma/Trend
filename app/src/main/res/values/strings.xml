@@ -14,4 +14,5 @@
     <string name="title_activity_create_trend">Create_trend</string>
     <string name="openDrawer">open</string>
     <string name="closeDrawer">close</string>
+    <string name="activity_image_trans">trend</string>
 </resources>
