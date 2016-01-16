@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.parse.ParseUser;
 
 /**
@@ -116,7 +118,7 @@ public class BaseActivity extends AppCompatActivity {
                                 public void run() {
                                     logout();
                                 }
-                            }, 150);
+                            }, 200);
                         }
                         return true;
 
@@ -167,6 +169,11 @@ public class BaseActivity extends AppCompatActivity {
         currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             ParseUser.logOutInBackground();
+        } else {
+            Profile profile = Profile.getCurrentProfile();
+            if (profile != null) {
+                LoginManager.getInstance().logOut();
+            }
         }
 
 

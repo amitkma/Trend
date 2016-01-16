@@ -56,25 +56,12 @@
         android:layout_marginRight="40dp"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal">
 
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                android:background="#303949AB"
-
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:text="LOGIN WITH FACEBOOK"
-                android:textColor="#8fff"
-                android:textSize="14sp" />
-        </LinearLayout>
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

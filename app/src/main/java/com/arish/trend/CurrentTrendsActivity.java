@@ -3,18 +3,14 @@ package com.arish.trend;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -22,18 +18,19 @@ import java.util.List;
 
 public class CurrentTrendsActivity extends BaseActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private CurrentTrendsAdapter currentTrendsAdapter;
     ParseUser currentUser = ParseUser.getCurrentUser();
     String currentUserid;
     boolean liked_temp=false;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private CurrentTrendsAdapter currentTrendsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_trends);
 
+        if (currentUserid != null)
         currentUserid = currentUser.getObjectId();
 
         Intent intent = getIntent();
