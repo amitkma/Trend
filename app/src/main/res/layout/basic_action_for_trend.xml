@@ -9,13 +9,23 @@
     <ImageView
         android:layout_width="36dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="8dp"
         android:alpha="0.54"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:id="@+id/trend_like_icon_id"
         android:src="@drawable/ic_favorite_black_24dp" />
 
+    <TextView
+        android:id="@+id/trend_upvote_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12"
+        android:layout_marginRight="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/secondary_text"
+        android:fontFamily="sans-serif-medium"
+        android:layout_centerVertical="true"
+       android:layout_toRightOf="@+id/trend_like_icon_id" />
 
     <ImageView
         android:id="@+id/trend_share_icon_id"
@@ -23,7 +33,7 @@
         android:layout_height="match_parent"
         android:layout_marginRight="8dp"
         android:alpha="0.54"
-        android:layout_toRightOf="@+id/trend_like_icon_id"
+        android:layout_toRightOf="@+id/trend_upvote_count"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:src="@drawable/ic_share_black_24dp" />

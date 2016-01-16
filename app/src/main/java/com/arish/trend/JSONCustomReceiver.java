@@ -32,11 +32,8 @@ public class JSONCustomReceiver extends ParsePushBroadcastReceiver {
 
         try {
             JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
-
             Log.e(TAG, "Push received: " + json);
-
             parseIntent = intent;
-
             parsePushJson(context, json);
 
         } catch (JSONException e) {
@@ -65,10 +62,15 @@ public class JSONCustomReceiver extends ParsePushBroadcastReceiver {
             JSONObject data = json.getJSONObject("data");
             String title = data.getString("title");
             String message = data.getString("message");
+            int category=data.getInt("category");
 
-            if (!isBackground) {
+            if (!isBackground&&category==0) {
                 Intent resultIntent = new Intent(context, CurrentTrendsActivity.class);
                 showNotificationMessage(context, title, message, resultIntent);
+            }
+            else if(!isBackground&&category==1){
+               // new CurrentTrendsAdapter(context).refreshData();
+                Log.e("RECEIVER", "this is started");
             }
 
         } catch (JSONException e) {
@@ -76,13 +78,9 @@ public class JSONCustomReceiver extends ParsePushBroadcastReceiver {
         }
     }
     private void showNotificationMessage(Context context, String title, String message, Intent intent) {
-
         notificationUtils = new NotificationUtils(context);
-
         intent.putExtras(parseIntent.getExtras());
-
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
         notificationUtils.showNotificationMessage(title, message, intent);
     }
 }

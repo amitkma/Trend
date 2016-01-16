@@ -27,11 +27,18 @@
             android:textSize="14sp"
             android:text="A flavourful local favorite of Amit-try this all star, easy-to-follow artichokes with roasted"
              />
-    <include layout="@layout/card_image_with_text"
-        android:id="@id/cardImageWithText"
-        android:layout_height="160dp"
-        android:layout_width="wrap_content"
-        />
+        <ImageView
+            android:id="@+id/current_trend_image"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+         android:scaleType="center"
+            android:src="@drawable/cover_education" />
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
         <include layout="@layout/basic_action_for_trend"
             android:id="@+id/basic_actions"/>
     </LinearLayout>

@@ -6,4 +6,7 @@ package com.arish.trend;
 public class TrendData {
     String title;
     String url;
+    Number upvoteCounts;
+    String trendId;
+    boolean liked;
 }

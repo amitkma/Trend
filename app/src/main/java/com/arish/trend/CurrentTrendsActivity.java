@@ -16,6 +16,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -23,16 +24,21 @@ public class CurrentTrendsActivity extends BaseActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private CurrentTrendsAdapter  currentTrendsAdapter;
+    private CurrentTrendsAdapter currentTrendsAdapter;
+    ParseUser currentUser = ParseUser.getCurrentUser();
+    String currentUserid;
+    boolean liked_temp=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_trends);
 
+        currentUserid = currentUser.getObjectId();
+
         Intent intent = getIntent();
-        mRecyclerView=(RecyclerView)findViewById(R.id.recyclerview);
-        mLayoutManager=new LinearLayoutManager(this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         currentTrendsAdapter = new CurrentTrendsAdapter(this);
@@ -50,9 +56,9 @@ public class CurrentTrendsActivity extends BaseActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent){
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent.getStringExtra("message")!=null){
+        if (intent.getStringExtra("message") != null) {
             refreshData();
         }
     }
@@ -63,9 +69,9 @@ public class CurrentTrendsActivity extends BaseActivity {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 {
-                    ParseObject parseObject = objects.get(objects.size()-1);
+                    ParseObject parseObject = objects.get(objects.size() - 1);
                     TrendData td = new TrendData();
-                    td.title=parseObject.getString("trendTitle");
+                    td.title = parseObject.getString("trendTitle");
                     ParseFile parseFile = parseObject.getParseFile("trendImage");
                     td.url = parseFile.getUrl();
                     currentTrendsAdapter.addRefreshData(td);
@@ -80,10 +86,25 @@ public class CurrentTrendsActivity extends BaseActivity {
         parseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                for(int i=0; i<objects.size(); i++){
-                    ParseObject parseObject = objects.get(objects.size()-i-1);
+                for (int i = 0; i < objects.size(); i++) {
+                    ParseObject parseObject = objects.get(objects.size() - i - 1);
                     TrendData td = new TrendData();
-                    td.title=parseObject.getString("trendTitle");
+                    td.title = parseObject.getString("trendTitle");
+                    td.trendId = parseObject.getObjectId();
+                    td.upvoteCounts = parseObject.getNumber("upvotesCount");
+
+                    ParseQuery<ParseObject> query=new ParseQuery<ParseObject>("Likes");
+                    query.whereEqualTo("userId",currentUserid);
+                    query.whereEqualTo("trendId",td.trendId);
+                    query.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if(objects.size()>0){
+                                liked_temp=true;
+                            }
+                        }
+                    });
+                    td.liked=liked_temp;
                     ParseFile parseFile = parseObject.getParseFile("trendImage");
                     td.url = parseFile.getUrl();
                     currentTrendsAdapter.addData(td);

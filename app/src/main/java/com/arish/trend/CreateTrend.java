@@ -84,6 +84,7 @@ public class CreateTrend extends AppCompatActivity {
                 trendData.put("trendImage", parseFile);
                 trendData.put("trendTitle", mTrendTitle.getText().toString().trim());
                 trendData.put("trendDescription", mTrendDescription.getText().toString().trim());
+                trendData.put("upvotesCount", 0);
                 //Finally save all the user details
                 trendData.saveInBackground(new SaveCallback() {
                     @Override
@@ -98,6 +99,7 @@ public class CreateTrend extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject();
                             jsonObject.put("message","Hello! Welcome to parse notifications.") ;
                             jsonObject.put("title", "Trend");
+                            jsonObject.put("category", Constants.PUSH_FOR_POST);
                             object.put("data", jsonObject);
                         } catch (JSONException e1) {
                             e1.printStackTrace();
