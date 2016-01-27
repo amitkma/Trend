@@ -23,9 +23,11 @@ import com.parse.SaveCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,59 +55,64 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         currentTrendData = data.get(position);
+        holder.mUserTextView.setText(currentTrendData.user);
+
+        String fDate = new SimpleDateFormat("dd MMM,yy").format(currentTrendData.date);
+        holder.mDateTextView.setText(fDate);
+
         holder.mTitleTextView.setText(currentTrendData.title);
-        Log.e("current id initial", currentTrendData.trendId);
         holder.mCountTextView.setText(currentTrendData.upvoteCounts.toString());
 
-        Log.e("likevalue", String.valueOf(currentTrendData.liked));
-
+       // Log.d("boolean_liked", String.valueOf(currentTrendData.liked));
         if (currentTrendData.liked) {
             holder.mLikeImageView.setImageResource(R.drawable.ic_favorited_icon);
+            holder.mLikeImageView.setTag(R.drawable.ic_favorited_icon);
         }
-        holder.mLikeImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.mLikeImageView.setImageResource(R.drawable.ic_favorited_icon);
-                int likes = data.get(position).upvoteCounts.intValue() + 1;
-                holder.mCountTextView.setText(Integer.toString(likes));
-                //  holder.mLikeImageView.setImageResource(R.drawable.ic_favorited_icon);
-                ParseObject likeParseObject = new ParseObject("Likes");
-                likeParseObject.put("trendId", data.get(position).trendId);
-                likeParseObject.put("userId", ParseUser.getCurrentUser().getObjectId());
-                likeParseObject.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
 
-                        ParseQuery<ParseObject> parseQuery = new ParseQuery<ParseObject>("TrendData");
-                        Log.e("current object ID", data.get(position).trendId);
-                        parseQuery.getInBackground(data.get(position).trendId, new GetCallback<ParseObject>() {
-                            @Override
-                            public void done(ParseObject object, ParseException e) {
-                                Log.e("objectid", object.getObjectId());
-                                object.increment("upvotesCount");
-                                object.saveInBackground();
-                                ParsePush newLikePush = new ParsePush();
-                                JSONObject objectLike = new JSONObject();
-                                try {
-                                    objectLike.put("is_background", false);
-                                    JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("message", "Hello! A new like is here!!!");
-                                    jsonObject.put("title", "Trend");
-                                    jsonObject.put("category", Constants.PUSH_FOR_LIKE);
-                                    objectLike.put("data", jsonObject);
-                                } catch (JSONException e1) {
-                                    e1.printStackTrace();
+            holder.mLikeImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.mLikeImageView.setImageResource(R.drawable.ic_favorited_icon);
+                    int likes = data.get(position).upvoteCounts.intValue() + 1;
+                    holder.mCountTextView.setText(Integer.toString(likes));
+                    //  holder.mLikeImageView.setImageResource(R.drawable.ic_favorited_icon);
+                    ParseObject likeParseObject = new ParseObject("Likes");
+                    likeParseObject.put("trendId", data.get(position).trendId);
+                    likeParseObject.put("userId", ParseUser.getCurrentUser().getObjectId());
+                    likeParseObject.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            ParseQuery<ParseObject> parseQuery = new ParseQuery<ParseObject>("TrendData");
+                            Log.e("current object ID", data.get(position).trendId);
+                            parseQuery.getInBackground(data.get(position).trendId, new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject object, ParseException e) {
+                                    Log.e("objectid", object.getObjectId());
+                                    object.increment("upvotesCount");
+                                    object.saveInBackground();
+                                    ParsePush newLikePush = new ParsePush();
+                                    JSONObject objectLike = new JSONObject();
+                                    try {
+                                        objectLike.put("is_background", false);
+                                        JSONObject jsonObject = new JSONObject();
+                                        jsonObject.put("message", "Hello! A new like is here!!!");
+                                        jsonObject.put("title", "Trend");
+                                        jsonObject.put("category", Constants.PUSH_FOR_LIKE);
+                                        objectLike.put("data", jsonObject);
+                                    } catch (JSONException e1) {
+                                        e1.printStackTrace();
+                                    }
+
+
+                                    newLikePush.setData(objectLike);
+                                    newLikePush.sendInBackground();
                                 }
-
-
-                                newLikePush.setData(objectLike);
-                                newLikePush.sendInBackground();
-                            }
-                        });
-                    }
-                });
-            }
-        });
+                            });
+                        }
+                    });
+                }
+            });
         Glide.with(mContext).load(currentTrendData.url).into(holder.mImageView);
 
     }
@@ -131,6 +138,8 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView mDateTextView;
+        private TextView mUserTextView;
         private TextView mTitleTextView;
         private TextView mCountTextView;
         private ImageView mImageView;
@@ -139,6 +148,8 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
         public ViewHolder(View itemView) {
             super(itemView);
             mTitleTextView = (TextView) itemView.findViewById(R.id.trend_description_id);
+            mUserTextView = (TextView) itemView.findViewById(R.id.name_trend_created_by);
+            mDateTextView = (TextView) itemView.findViewById(R.id.time_trend_created_at);
             mImageView = (ImageView) itemView.findViewById(R.id.current_trend_image);
             mLikeImageView = (ImageView) itemView.findViewById(R.id.trend_like_icon_id);
             mCountTextView = (TextView) itemView.findViewById(R.id.trend_upvote_count);

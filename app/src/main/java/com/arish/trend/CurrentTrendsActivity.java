@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.parse.FindCallback;
@@ -19,8 +20,7 @@ import java.util.List;
 public class CurrentTrendsActivity extends BaseActivity {
 
     ParseUser currentUser = ParseUser.getCurrentUser();
-    String currentUserid;
-    boolean liked_temp=false;
+    boolean liked_temp = false;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private CurrentTrendsAdapter currentTrendsAdapter;
@@ -30,8 +30,7 @@ public class CurrentTrendsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_trends);
 
-        if (currentUserid != null)
-        currentUserid = currentUser.getObjectId();
+
 
         Intent intent = getIntent();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
@@ -81,33 +80,60 @@ public class CurrentTrendsActivity extends BaseActivity {
         mRecyclerView.setAdapter(currentTrendsAdapter);
         ParseQuery<ParseObject> parseQuery = new ParseQuery<ParseObject>("TrendData");
         parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            public String temp_username = null;
+            public String temp_profile_uri = null;
+
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 for (int i = 0; i < objects.size(); i++) {
-                    ParseObject parseObject = objects.get(objects.size() - i - 1);
-                    TrendData td = new TrendData();
+                    final ParseObject parseObject = objects.get(objects.size() - i - 1);
+                    final TrendData td = new TrendData();
                     td.title = parseObject.getString("trendTitle");
                     td.trendId = parseObject.getObjectId();
                     td.upvoteCounts = parseObject.getNumber("upvotesCount");
+                    td.date = parseObject.getCreatedAt();
 
-                    ParseQuery<ParseObject> query=new ParseQuery<ParseObject>("Likes");
-                    query.whereEqualTo("userId",currentUserid);
-                    query.whereEqualTo("trendId",td.trendId);
-                    query.findInBackground(new FindCallback<ParseObject>() {
+
+                    ParseQuery<ParseUser> query1 = ParseUser.getQuery();
+                    query1.whereEqualTo("objectId", parseObject.getString("userId"));
+                    query1.findInBackground(new FindCallback<ParseUser>() {
                         @Override
-                        public void done(List<ParseObject> objects, ParseException e) {
-                            if(objects.size()>0){
-                                liked_temp=true;
+                        public void done(List<ParseUser> objects, ParseException e) {
+                            if (objects.size() >= 0) {
+                                ParseUser parsetempuser;
+                                parsetempuser = objects.get(0);
+                                td.profileUri = parsetempuser.get("uri").toString();
+                                td.user = parsetempuser.getUsername();
+                                if(ParseUser.getCurrentUser().getObjectId()!=null)
+                                Log.d("userid",ParseUser.getCurrentUser().getObjectId());
+                                if(parseObject.getObjectId()!=null)
+                                Log.d("trendid",parseObject.getObjectId());
+                                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Likes");
+                                query.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId());
+                                query.whereEqualTo("trendId", parseObject.getObjectId());
+                                query.findInBackground(new FindCallback<ParseObject>() {
+                                    @Override
+                                    public void done(List<ParseObject> objects, ParseException e) {
+                                        currentTrendsAdapter.addData(td);
+
+                                        if (objects.size() > 0) {
+                                            td.liked = true;
+                                        }
+                                    }
+                                });
+                                ParseFile parseFile = parseObject.getParseFile("trendImage");
+                                td.url = parseFile.getUrl();
+
+
                             }
                         }
                     });
-                    td.liked=liked_temp;
-                    ParseFile parseFile = parseObject.getParseFile("trendImage");
-                    td.url = parseFile.getUrl();
-                    currentTrendsAdapter.addData(td);
+
+
                 }
             }
         });
     }
+
 
 }

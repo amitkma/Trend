@@ -85,6 +85,8 @@ public class CreateTrend extends AppCompatActivity {
                 trendData.put("trendTitle", mTrendTitle.getText().toString().trim());
                 trendData.put("trendDescription", mTrendDescription.getText().toString().trim());
                 trendData.put("upvotesCount", 0);
+                trendData.put("userId",ParseUser.getCurrentUser().getObjectId());
+
                 //Finally save all the user details
                 trendData.saveInBackground(new SaveCallback() {
                     @Override

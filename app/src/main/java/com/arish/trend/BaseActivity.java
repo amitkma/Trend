@@ -37,6 +37,8 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+
+
     //Navigatio Drawer
     public void setup_nav_drawer() {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
