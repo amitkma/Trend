@@ -102,6 +102,7 @@ public class CurrentTrendsActivity extends BaseActivity {
                             if (objects.size() >= 0) {
                                 ParseUser parsetempuser;
                                 parsetempuser = objects.get(0);
+                                if(parsetempuser.get("uri").toString()!=null)
                                 td.profileUri = parsetempuser.get("uri").toString();
                                 td.user = parsetempuser.getUsername();
                                 if(ParseUser.getCurrentUser().getObjectId()!=null)
