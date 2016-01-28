@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.parse.FindCallback;
@@ -25,9 +24,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,11 +51,12 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         currentTrendData = data.get(position);
+        if (currentTrendData.user != null)
         holder.mUserTextView.setText(currentTrendData.user);
-
-        String fDate = new SimpleDateFormat("dd MMM,yy").format(currentTrendData.date);
-        holder.mDateTextView.setText(fDate);
-
+        if (currentTrendData.date != null) {
+            String fDate = new SimpleDateFormat("dd MMM,yy").format(currentTrendData.date);
+            holder.mDateTextView.setText(fDate);
+        }
         holder.mTitleTextView.setText(currentTrendData.title);
         holder.mCountTextView.setText(currentTrendData.upvoteCounts.toString());
 
@@ -136,6 +133,16 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
         });
     }
 
+    public void addData(TrendData newTrendData) {
+        data.add(newTrendData);
+        notifyItemInserted(data.size() - 1);
+    }
+
+    public void addRefreshData(TrendData newTrendData) {
+        data.add(0, newTrendData);
+        notifyItemInserted(data.size() - 1);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mDateTextView;
@@ -154,15 +161,5 @@ public class CurrentTrendsAdapter extends RecyclerView.Adapter<CurrentTrendsAdap
             mLikeImageView = (ImageView) itemView.findViewById(R.id.trend_like_icon_id);
             mCountTextView = (TextView) itemView.findViewById(R.id.trend_upvote_count);
         }
-    }
-
-    public void addData(TrendData newTrendData) {
-        data.add(newTrendData);
-        notifyItemInserted(data.size() - 1);
-    }
-
-    public void addRefreshData(TrendData newTrendData) {
-        data.add(0, newTrendData);
-        notifyItemInserted(data.size() - 1);
     }
 }

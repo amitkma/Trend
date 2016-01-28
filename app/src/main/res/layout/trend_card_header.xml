@@ -2,13 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/trend_card_header_id"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:padding="16dp">
+    android:layout_height="56dp"
+    android:background="#424242"
+    android:paddingLeft="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_trend_created_by"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/person_icon" />
 
     <LinearLayout
@@ -26,16 +28,17 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:text="User"
-            android:textColor="@color/primary_text"
+            android:textColor="#fff"
             android:textSize="14sp" />
 
         <TextView
             android:id="@+id/time_trend_created_at"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jan 01,2016"
             android:fontFamily="sans-serif"
+            android:text="Jan 01,2016"
             android:textColor="@color/secondary_text"
             android:textSize="12sp" />
+
     </LinearLayout>
 </RelativeLayout>

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.parse.FindCallback;
@@ -31,22 +30,23 @@ public class CurrentTrendsActivity extends BaseActivity {
         setContentView(R.layout.activity_current_trends);
 
 
-
         Intent intent = getIntent();
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         currentTrendsAdapter = new CurrentTrendsAdapter(this);
+
         setup_toolbar();
         setup_nav_drawer();
-
         setUpRecyclerView();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CurrentTrendsActivity.this, CreateTrend.class));
+
             }
         });
     }
@@ -93,22 +93,29 @@ public class CurrentTrendsActivity extends BaseActivity {
                     td.upvoteCounts = parseObject.getNumber("upvotesCount");
                     td.date = parseObject.getCreatedAt();
 
+                    ParseFile parseFile = parseObject.getParseFile("trendImage");
+                    td.url = parseFile.getUrl();
 
+                    currentTrendsAdapter.addData(td);
+                   /*
                     ParseQuery<ParseUser> query1 = ParseUser.getQuery();
                     query1.whereEqualTo("objectId", parseObject.getString("userId"));
                     query1.findInBackground(new FindCallback<ParseUser>() {
                         @Override
                         public void done(List<ParseUser> objects, ParseException e) {
-                            if (objects.size() >= 0) {
-                                ParseUser parsetempuser;
-                                parsetempuser = objects.get(0);
-                                if(parsetempuser.get("uri").toString()!=null)
-                                td.profileUri = parsetempuser.get("uri").toString();
+                            ParseUser parsetempuser;
+
+                            if (objects.size() > 0) {
+
+                                    parsetempuser = objects.get(0);
+
+                                if (parsetempuser.get("uri").toString() != null)
+                                    td.profileUri = parsetempuser.get("uri").toString();
                                 td.user = parsetempuser.getUsername();
-                                if(ParseUser.getCurrentUser().getObjectId()!=null)
-                                Log.d("userid",ParseUser.getCurrentUser().getObjectId());
-                                if(parseObject.getObjectId()!=null)
-                                Log.d("trendid",parseObject.getObjectId());
+                                if (ParseUser.getCurrentUser().getObjectId() != null)
+                                    Log.d("userid", ParseUser.getCurrentUser().getObjectId());
+                                if (parseObject.getObjectId() != null)
+                                    Log.d("trendid", parseObject.getObjectId());
                                 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Likes");
                                 query.whereEqualTo("userId", ParseUser.getCurrentUser().getObjectId());
                                 query.whereEqualTo("trendId", parseObject.getObjectId());
@@ -122,14 +129,14 @@ public class CurrentTrendsActivity extends BaseActivity {
                                         }
                                     }
                                 });
-                                ParseFile parseFile = parseObject.getParseFile("trendImage");
-                                td.url = parseFile.getUrl();
 
 
-                            }
+
+                }
+
                         }
                     });
-
+*/
 
                 }
             }

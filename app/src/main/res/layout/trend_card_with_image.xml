@@ -2,16 +2,21 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    card:cardCornerRadius="2dp"
+    android:layout_height="276dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    card:cardCornerRadius="4dp"
     card:cardElevation="4dp"
     card:cardUseCompatPadding="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+        android:layout_width="match_parent"
+            android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include
@@ -22,31 +27,35 @@
             android:id="@+id/trend_description_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#424242"
             android:maxLines="2"
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="A flavourful local favorite of Amit-try this all star, easy-to-follow artichokes with roasted"
-            android:textColor="@color/primary_text"
+            android:textColor="#fff"
             android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/current_trend_image"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:scaleType="center"
+            android:scaleType="centerCrop"
             android:src="@drawable/cover_education" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/divider" />
 
-        <include
-            android:id="@+id/basic_actions"
-            layout="@layout/basic_action_for_trend" />
+
     </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <include
+
+                android:id="@+id/basic_actions"
+                layout="@layout/basic_action_for_trend" />
+        </RelativeLayout>
+    </RelativeLayout>
 </android.support.v7.widget.CardView>

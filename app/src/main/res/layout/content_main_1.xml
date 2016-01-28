@@ -110,11 +110,11 @@
         android:layout_above="@+id/linearlayout_edittext"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="80dp"
-        android:fontFamily="sans-serif-condensed"
-        android:text="TREND"
+        android:fontFamily="sans-serif-medium"
+        android:text="Welcome back!"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#fff"
-        android:textSize="50sp"
+        android:textColor="#00BFA5"
+        android:textSize="20sp"
         android:transitionName="@string/activity_image_trans" />
 
     <TextView

@@ -36,6 +36,10 @@ public class MainActivity extends BaseActivity {
 
             getWindow().setEnterTransition(fade);
         }
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         loginButton = (Button) findViewById(R.id.loginButtonId);
@@ -111,7 +115,8 @@ public class MainActivity extends BaseActivity {
         ParseUser parseUser = new ParseUser();
         parseUser.setUsername(usernameField.getText().toString().trim());
         parseUser.setPassword(userPasswordField.getText().toString().trim());
-
+        parseUser.put("Name", "Default");
+        parseUser.put("uri", "Default");
         parseUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
